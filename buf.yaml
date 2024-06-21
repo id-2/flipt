@@ -1,5 +1,9 @@
-version: v1
-name: buf.build/flipt-io/flipt
+version: v2
+modules:
+  - path: rpc/flipt
+    name: buf.build/flipt-io/flipt
+  - path: rpc/configuration
+    name: buf.build/flipt-io/configuration
 deps:
   - buf.build/googleapis/googleapis
   - buf.build/grpc-ecosystem/grpc-gateway
@@ -9,12 +13,18 @@ lint:
   except:
     - ENUM_VALUE_PREFIX
     - ENUM_ZERO_VALUE_SUFFIX
+    - FIELD_NOT_REQUIRED
     - PACKAGE_DIRECTORY_MATCH
+    - PACKAGE_NO_IMPORT_CYCLE
     - PACKAGE_VERSION_SUFFIX
     - RPC_REQUEST_RESPONSE_UNIQUE
     - RPC_REQUEST_STANDARD_NAME
     - RPC_RESPONSE_STANDARD_NAME
     - SERVICE_SUFFIX
+  disallow_comment_ignores: true
 breaking:
   use:
     - FILE
+  except:
+    - EXTENSION_NO_DELETE
+    - FIELD_SAME_DEFAULT

@@ -1,0 +1,42 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+  # namespaces
+  #
+  - selector: configuration.ConfigurationService.GetNamespace
+    get: /config/v1/namespaces/{key}
+
+  - selector: configuration.ConfigurationService.ListNamespaces
+    get: /config/v1/namespaces
+
+  - selector: configuration.ConfigurationService.CreateNamespace
+    post: /config/v1/namespaces
+    body: "*"
+
+  - selector: configuration.ConfigurationService.UpdateNamespace
+    put: /config/v1/namespaces
+    body: "*"
+
+  - selector: configuration.ConfigurationService.DeleteNamespace
+    delete: /config/v1/namespaces/{key}
+
+  # resources
+  #
+  - selector: configuration.ConfigurationService.GetResource
+    get: /config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}
+
+  - selector: configuration.ConfigurationService.ListResources
+    get: /config/v1/{type=*/*}/namespaces/{namespace}/resources
+
+  - selector: configuration.ConfigurationService.CreateResource
+    post: /config/v1/{type=*/*}/namespaces/{namespace}/resources
+    body: "*"
+
+  - selector: configuration.ConfigurationService.UpdateResource
+    put: /config/v1/{type=*/*}/namespaces/{namespace}/resources
+    body: "*"
+
+  - selector: configuration.ConfigurationService.UpdateResource
+    delete: /config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}

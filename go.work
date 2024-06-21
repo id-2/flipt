@@ -1,6 +1,4 @@
-go 1.22.0
-
-toolchain go1.22.2
+go 1.22.3
 
 use (
 	.
@@ -10,5 +8,6 @@ use (
 	./errors
 	./internal/cmd/protoc-gen-go-flipt-sdk
 	./rpc/flipt
+	./rpc/configuration
 	./sdk/go
 )

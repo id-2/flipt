@@ -1,0 +1,184 @@
+syntax = "proto3";
+
+package configuration;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "go.flipt.io/flipt/rpc/configuration";
+
+service ConfigurationService {
+  rpc GetNamespace(NamespaceMeta) returns (Namespace) {}
+  rpc ListNamespaces(ListNamespacesRequest) returns (NamespaceList) {}
+  rpc CreateNamespace(Namespace) returns (UpdateNamespaceResponse) {}
+  rpc UpdateNamespace(Namespace) returns (UpdateNamespaceResponse) {}
+  rpc DeleteNamespace(NamespaceMeta) returns (UpdateNamespaceResponse) {}
+
+  rpc GetResource(ResourceMeta) returns (Resource) {}
+  rpc ListResources(ListResourcesRequest) returns (ResourceList) {}
+  rpc CreateResource(Resource) returns (UpdateResourceResponse) {}
+  rpc UpdateResource(Resource) returns (UpdateResourceResponse) {}
+  rpc DeleteResource(ResourceMeta) returns (UpdateResourceResponse) {}
+}
+
+/* Namespace */
+
+message NamespaceMeta {
+  string key = 1;
+  optional string reference = 100;
+}
+
+message Namespace {
+  string key = 1;
+  string name = 2;
+  optional string description = 3;
+  optional bool protected = 4;
+  optional string reference = 100;
+}
+
+message NamespaceList {
+  repeated Namespace items = 1;
+}
+
+message ListNamespacesRequest {
+  optional string reference = 100;
+}
+
+message UpdateNamespaceResponse {
+  NamespaceMeta metadata = 1;
+}
+
+/* Resource */
+
+message ResourceMeta {
+  // type is the fully-qualified protobuf message name
+  string type = 1;
+  string namespace = 2;
+  string key = 3;
+  optional string reference = 100;
+}
+
+message Resource {
+  // type is the fully-qualified protobuf message name
+  string type = 1;
+  string namespace = 2;
+  string key = 3;
+  google.protobuf.Any payload = 4;
+  optional string reference = 100;
+}
+
+message ListResourcesRequest {
+  string type = 1;
+  string namespace = 2;
+  optional string reference = 100;
+}
+
+message ResourceList {
+  optional string reference = 100;
+}
+
+message UpdateResourceResponse {
+  ResourceMeta metadata = 1;
+}
+
+/* Flag */
+
+enum FlagType {
+  VARIANT_FLAG_TYPE = 0;
+  BOOLEAN_FLAG_TYPE = 1;
+}
+
+message Flag {
+  string namespace = 1;
+  FlagType type = 2;
+  string key = 3;
+  string name = 4;
+  string description = 5;
+  bool enabled = 6;
+  repeated Variant variants = 7;
+  repeated Rule rules = 8;
+  repeated Rollout rollouts = 9;
+}
+
+message Variant {
+  string key = 1;
+  string name = 2;
+  string description = 3;
+  string attachment = 4;
+}
+
+enum SegmentOperator {
+  OR_SEGMENT_OPERATOR = 0;
+  AND_SEGMENT_OPERATOR = 1;
+}
+
+message Rule {
+  SegmentOperator segment_operator = 1;
+  repeated string segments = 2;
+  repeated Distribution distributions = 3;
+}
+
+message Distribution {
+  string variant = 1;
+  float rollout = 2;
+}
+
+enum RolloutType {
+  UNKNOWN_ROLLOUT_TYPE = 0;
+  SEGMENT_ROLLOUT_TYPE = 1;
+  THRESHOLD_ROLLOUT_TYPE = 2;
+}
+
+message Rollout {
+  RolloutType type = 1;
+  int32 rank = 2;
+  string description = 3;
+  oneof rule {
+    RolloutSegment segment = 20;
+    RolloutThreshold threshold = 21;
+  }
+}
+
+message RolloutSegment {
+  bool value = 1;
+  repeated string segments = 2;
+  SegmentOperator segment_operator = 3;
+}
+
+message RolloutThreshold {
+  float percentage = 1;
+  bool value = 2;
+}
+
+/* Segment */
+
+message Segment {
+  string namespace = 1;
+  MatchType match_type = 2;
+  string key = 3;
+  string name = 4;
+  string description = 5;
+  repeated Constraint constraints = 6;
+}
+
+enum MatchType {
+  ALL_MATCH_TYPE = 0;
+  ANY_MATCH_TYPE = 1;
+}
+
+enum ComparisonType {
+  UNKNOWN_COMPARISON_TYPE = 0;
+  STRING_COMPARISON_TYPE = 1;
+  NUMBER_COMPARISON_TYPE = 2;
+  BOOLEAN_COMPARISON_TYPE = 3;
+  DATETIME_COMPARISON_TYPE = 4;
+}
+
+message Constraint {
+  ComparisonType type = 1;
+  string property = 2;
+  string operator = 3;
+  string value = 4;
+  string description = 5;
+}
