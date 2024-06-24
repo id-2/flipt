@@ -25,18 +25,18 @@ http:
   # resources
   #
   - selector: configuration.ConfigurationService.GetResource
-    get: /config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}
+    get: /config/v1/{type=**}/namespaces/{namespace}/resources/{key}
 
   - selector: configuration.ConfigurationService.ListResources
-    get: /config/v1/{type=*/*}/namespaces/{namespace}/resources
+    get: /config/v1/{type=**}/namespaces/{namespace}/resources
 
   - selector: configuration.ConfigurationService.CreateResource
-    post: /config/v1/{type=*/*}/namespaces/{namespace}/resources
+    post: /config/v1/{type=**}/namespaces/{namespace}/resources
     body: "*"
 
   - selector: configuration.ConfigurationService.UpdateResource
-    put: /config/v1/{type=*/*}/namespaces/{namespace}/resources
+    put: /config/v1/{type=**}/namespaces/{namespace}/resources
     body: "*"
 
   - selector: configuration.ConfigurationService.UpdateResource
-    delete: /config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}
+    delete: /config/v1/{type=**}/namespaces/{namespace}/resources/{key}

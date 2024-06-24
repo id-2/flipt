@@ -868,7 +868,7 @@ func RegisterConfigurationServiceHandlerServer(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/GetResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/GetResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources/{key}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -893,7 +893,7 @@ func RegisterConfigurationServiceHandlerServer(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/ListResources", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/ListResources", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -918,7 +918,7 @@ func RegisterConfigurationServiceHandlerServer(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/CreateResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/CreateResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -943,7 +943,7 @@ func RegisterConfigurationServiceHandlerServer(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -968,7 +968,7 @@ func RegisterConfigurationServiceHandlerServer(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources/{key}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1142,7 +1142,7 @@ func RegisterConfigurationServiceHandlerClient(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/GetResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/GetResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources/{key}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1164,7 +1164,7 @@ func RegisterConfigurationServiceHandlerClient(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/ListResources", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/ListResources", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1186,7 +1186,7 @@ func RegisterConfigurationServiceHandlerClient(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/CreateResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/CreateResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1208,7 +1208,7 @@ func RegisterConfigurationServiceHandlerClient(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1230,7 +1230,7 @@ func RegisterConfigurationServiceHandlerClient(ctx context.Context, mux *runtime
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=*/*}/namespaces/{namespace}/resources/{key}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/configuration.ConfigurationService/UpdateResource", runtime.WithHTTPPathPattern("/config/v1/{type=**}/namespaces/{namespace}/resources/{key}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1260,15 +1260,15 @@ var (
 
 	pattern_ConfigurationService_DeleteNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"config", "v1", "namespaces", "key"}, ""))
 
-	pattern_ConfigurationService_GetResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 1, 0, 4, 2, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"config", "v1", "type", "namespaces", "namespace", "resources", "key"}, ""))
+	pattern_ConfigurationService_GetResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 3, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"config", "v1", "type", "namespaces", "namespace", "resources", "key"}, ""))
 
-	pattern_ConfigurationService_ListResources_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 1, 0, 4, 2, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"config", "v1", "type", "namespaces", "namespace", "resources"}, ""))
+	pattern_ConfigurationService_ListResources_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 3, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"config", "v1", "type", "namespaces", "namespace", "resources"}, ""))
 
-	pattern_ConfigurationService_CreateResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 1, 0, 4, 2, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"config", "v1", "type", "namespaces", "namespace", "resources"}, ""))
+	pattern_ConfigurationService_CreateResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 3, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"config", "v1", "type", "namespaces", "namespace", "resources"}, ""))
 
-	pattern_ConfigurationService_UpdateResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 1, 0, 4, 2, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"config", "v1", "type", "namespaces", "namespace", "resources"}, ""))
+	pattern_ConfigurationService_UpdateResource_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 3, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"config", "v1", "type", "namespaces", "namespace", "resources"}, ""))
 
-	pattern_ConfigurationService_UpdateResource_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 1, 0, 4, 2, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"config", "v1", "type", "namespaces", "namespace", "resources", "key"}, ""))
+	pattern_ConfigurationService_UpdateResource_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 3, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"config", "v1", "type", "namespaces", "namespace", "resources", "key"}, ""))
 )
 
 var (

@@ -75,6 +75,7 @@ message ListResourcesRequest {
 }
 
 message ResourceList {
+  repeated Resource resources = 1;
   optional string reference = 100;
 }
 
