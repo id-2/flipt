@@ -33,7 +33,7 @@ func main() {
 		// warning.
 		gen.SupportedFeatures |= uint64(pluginpb.CodeGeneratorResponse_FEATURE_PROTO3_OPTIONAL)
 		for _, f := range gen.Files {
-			if !f.Generate {
+			if !f.Generate || len(f.Services) == 0 {
 				continue
 			}
 
@@ -71,7 +71,7 @@ func generateSDK(gen *protogen.Plugin) {
 	g.P("type Transport interface {")
 	var types [][2]string
 	for _, file := range gen.Files {
-		if !file.Generate {
+		if !file.Generate || len(file.Services) == 0 {
 			continue
 		}
 

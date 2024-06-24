@@ -26,7 +26,7 @@ func generateGRPC(gen *protogen.Plugin) {
 	g.P("}\n")
 
 	for _, file := range gen.Files {
-		if !file.Generate {
+		if !file.Generate || len(file.Services) == 0 {
 			continue
 		}
 
