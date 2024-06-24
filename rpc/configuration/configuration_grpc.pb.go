@@ -35,16 +35,16 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConfigurationServiceClient interface {
-	GetNamespace(ctx context.Context, in *NamespaceMeta, opts ...grpc.CallOption) (*Namespace, error)
-	ListNamespaces(ctx context.Context, in *ListNamespacesRequest, opts ...grpc.CallOption) (*NamespaceList, error)
-	CreateNamespace(ctx context.Context, in *Namespace, opts ...grpc.CallOption) (*UpdateNamespaceResponse, error)
-	UpdateNamespace(ctx context.Context, in *Namespace, opts ...grpc.CallOption) (*UpdateNamespaceResponse, error)
-	DeleteNamespace(ctx context.Context, in *NamespaceMeta, opts ...grpc.CallOption) (*UpdateNamespaceResponse, error)
-	GetResource(ctx context.Context, in *ResourceMeta, opts ...grpc.CallOption) (*Resource, error)
-	ListResources(ctx context.Context, in *ListResourcesRequest, opts ...grpc.CallOption) (*ResourceList, error)
-	CreateResource(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*UpdateResourceResponse, error)
-	UpdateResource(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*UpdateResourceResponse, error)
-	DeleteResource(ctx context.Context, in *ResourceMeta, opts ...grpc.CallOption) (*UpdateResourceResponse, error)
+	GetNamespace(ctx context.Context, in *GetNamespaceRequest, opts ...grpc.CallOption) (*NamespaceResponse, error)
+	ListNamespaces(ctx context.Context, in *ListNamespacesRequest, opts ...grpc.CallOption) (*ListNamespacesResponse, error)
+	CreateNamespace(ctx context.Context, in *UpdateNamespaceRequest, opts ...grpc.CallOption) (*NamespaceResponse, error)
+	UpdateNamespace(ctx context.Context, in *UpdateNamespaceRequest, opts ...grpc.CallOption) (*NamespaceResponse, error)
+	DeleteNamespace(ctx context.Context, in *DeleteNamespaceRequest, opts ...grpc.CallOption) (*DeleteNamespaceResponse, error)
+	GetResource(ctx context.Context, in *GetResourceRequest, opts ...grpc.CallOption) (*ResourceResponse, error)
+	ListResources(ctx context.Context, in *ListResourcesRequest, opts ...grpc.CallOption) (*ListResourcesResponse, error)
+	CreateResource(ctx context.Context, in *UpdateResourceRequest, opts ...grpc.CallOption) (*ResourceResponse, error)
+	UpdateResource(ctx context.Context, in *UpdateResourceRequest, opts ...grpc.CallOption) (*ResourceResponse, error)
+	DeleteResource(ctx context.Context, in *DeleteResourceRequest, opts ...grpc.CallOption) (*DeleteResourceResponse, error)
 }
 
 type configurationServiceClient struct {
@@ -55,9 +55,9 @@ func NewConfigurationServiceClient(cc grpc.ClientConnInterface) ConfigurationSer
 	return &configurationServiceClient{cc}
 }
 
-func (c *configurationServiceClient) GetNamespace(ctx context.Context, in *NamespaceMeta, opts ...grpc.CallOption) (*Namespace, error) {
+func (c *configurationServiceClient) GetNamespace(ctx context.Context, in *GetNamespaceRequest, opts ...grpc.CallOption) (*NamespaceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Namespace)
+	out := new(NamespaceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_GetNamespace_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -65,9 +65,9 @@ func (c *configurationServiceClient) GetNamespace(ctx context.Context, in *Names
 	return out, nil
 }
 
-func (c *configurationServiceClient) ListNamespaces(ctx context.Context, in *ListNamespacesRequest, opts ...grpc.CallOption) (*NamespaceList, error) {
+func (c *configurationServiceClient) ListNamespaces(ctx context.Context, in *ListNamespacesRequest, opts ...grpc.CallOption) (*ListNamespacesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(NamespaceList)
+	out := new(ListNamespacesResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_ListNamespaces_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -75,9 +75,9 @@ func (c *configurationServiceClient) ListNamespaces(ctx context.Context, in *Lis
 	return out, nil
 }
 
-func (c *configurationServiceClient) CreateNamespace(ctx context.Context, in *Namespace, opts ...grpc.CallOption) (*UpdateNamespaceResponse, error) {
+func (c *configurationServiceClient) CreateNamespace(ctx context.Context, in *UpdateNamespaceRequest, opts ...grpc.CallOption) (*NamespaceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateNamespaceResponse)
+	out := new(NamespaceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_CreateNamespace_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -85,9 +85,9 @@ func (c *configurationServiceClient) CreateNamespace(ctx context.Context, in *Na
 	return out, nil
 }
 
-func (c *configurationServiceClient) UpdateNamespace(ctx context.Context, in *Namespace, opts ...grpc.CallOption) (*UpdateNamespaceResponse, error) {
+func (c *configurationServiceClient) UpdateNamespace(ctx context.Context, in *UpdateNamespaceRequest, opts ...grpc.CallOption) (*NamespaceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateNamespaceResponse)
+	out := new(NamespaceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_UpdateNamespace_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -95,9 +95,9 @@ func (c *configurationServiceClient) UpdateNamespace(ctx context.Context, in *Na
 	return out, nil
 }
 
-func (c *configurationServiceClient) DeleteNamespace(ctx context.Context, in *NamespaceMeta, opts ...grpc.CallOption) (*UpdateNamespaceResponse, error) {
+func (c *configurationServiceClient) DeleteNamespace(ctx context.Context, in *DeleteNamespaceRequest, opts ...grpc.CallOption) (*DeleteNamespaceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateNamespaceResponse)
+	out := new(DeleteNamespaceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_DeleteNamespace_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -105,9 +105,9 @@ func (c *configurationServiceClient) DeleteNamespace(ctx context.Context, in *Na
 	return out, nil
 }
 
-func (c *configurationServiceClient) GetResource(ctx context.Context, in *ResourceMeta, opts ...grpc.CallOption) (*Resource, error) {
+func (c *configurationServiceClient) GetResource(ctx context.Context, in *GetResourceRequest, opts ...grpc.CallOption) (*ResourceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Resource)
+	out := new(ResourceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_GetResource_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -115,9 +115,9 @@ func (c *configurationServiceClient) GetResource(ctx context.Context, in *Resour
 	return out, nil
 }
 
-func (c *configurationServiceClient) ListResources(ctx context.Context, in *ListResourcesRequest, opts ...grpc.CallOption) (*ResourceList, error) {
+func (c *configurationServiceClient) ListResources(ctx context.Context, in *ListResourcesRequest, opts ...grpc.CallOption) (*ListResourcesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ResourceList)
+	out := new(ListResourcesResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_ListResources_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -125,9 +125,9 @@ func (c *configurationServiceClient) ListResources(ctx context.Context, in *List
 	return out, nil
 }
 
-func (c *configurationServiceClient) CreateResource(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*UpdateResourceResponse, error) {
+func (c *configurationServiceClient) CreateResource(ctx context.Context, in *UpdateResourceRequest, opts ...grpc.CallOption) (*ResourceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateResourceResponse)
+	out := new(ResourceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_CreateResource_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -135,9 +135,9 @@ func (c *configurationServiceClient) CreateResource(ctx context.Context, in *Res
 	return out, nil
 }
 
-func (c *configurationServiceClient) UpdateResource(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*UpdateResourceResponse, error) {
+func (c *configurationServiceClient) UpdateResource(ctx context.Context, in *UpdateResourceRequest, opts ...grpc.CallOption) (*ResourceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateResourceResponse)
+	out := new(ResourceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_UpdateResource_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -145,9 +145,9 @@ func (c *configurationServiceClient) UpdateResource(ctx context.Context, in *Res
 	return out, nil
 }
 
-func (c *configurationServiceClient) DeleteResource(ctx context.Context, in *ResourceMeta, opts ...grpc.CallOption) (*UpdateResourceResponse, error) {
+func (c *configurationServiceClient) DeleteResource(ctx context.Context, in *DeleteResourceRequest, opts ...grpc.CallOption) (*DeleteResourceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateResourceResponse)
+	out := new(DeleteResourceResponse)
 	err := c.cc.Invoke(ctx, ConfigurationService_DeleteResource_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -159,16 +159,16 @@ func (c *configurationServiceClient) DeleteResource(ctx context.Context, in *Res
 // All implementations must embed UnimplementedConfigurationServiceServer
 // for forward compatibility
 type ConfigurationServiceServer interface {
-	GetNamespace(context.Context, *NamespaceMeta) (*Namespace, error)
-	ListNamespaces(context.Context, *ListNamespacesRequest) (*NamespaceList, error)
-	CreateNamespace(context.Context, *Namespace) (*UpdateNamespaceResponse, error)
-	UpdateNamespace(context.Context, *Namespace) (*UpdateNamespaceResponse, error)
-	DeleteNamespace(context.Context, *NamespaceMeta) (*UpdateNamespaceResponse, error)
-	GetResource(context.Context, *ResourceMeta) (*Resource, error)
-	ListResources(context.Context, *ListResourcesRequest) (*ResourceList, error)
-	CreateResource(context.Context, *Resource) (*UpdateResourceResponse, error)
-	UpdateResource(context.Context, *Resource) (*UpdateResourceResponse, error)
-	DeleteResource(context.Context, *ResourceMeta) (*UpdateResourceResponse, error)
+	GetNamespace(context.Context, *GetNamespaceRequest) (*NamespaceResponse, error)
+	ListNamespaces(context.Context, *ListNamespacesRequest) (*ListNamespacesResponse, error)
+	CreateNamespace(context.Context, *UpdateNamespaceRequest) (*NamespaceResponse, error)
+	UpdateNamespace(context.Context, *UpdateNamespaceRequest) (*NamespaceResponse, error)
+	DeleteNamespace(context.Context, *DeleteNamespaceRequest) (*DeleteNamespaceResponse, error)
+	GetResource(context.Context, *GetResourceRequest) (*ResourceResponse, error)
+	ListResources(context.Context, *ListResourcesRequest) (*ListResourcesResponse, error)
+	CreateResource(context.Context, *UpdateResourceRequest) (*ResourceResponse, error)
+	UpdateResource(context.Context, *UpdateResourceRequest) (*ResourceResponse, error)
+	DeleteResource(context.Context, *DeleteResourceRequest) (*DeleteResourceResponse, error)
 	mustEmbedUnimplementedConfigurationServiceServer()
 }
 
@@ -176,34 +176,34 @@ type ConfigurationServiceServer interface {
 type UnimplementedConfigurationServiceServer struct {
 }
 
-func (UnimplementedConfigurationServiceServer) GetNamespace(context.Context, *NamespaceMeta) (*Namespace, error) {
+func (UnimplementedConfigurationServiceServer) GetNamespace(context.Context, *GetNamespaceRequest) (*NamespaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNamespace not implemented")
 }
-func (UnimplementedConfigurationServiceServer) ListNamespaces(context.Context, *ListNamespacesRequest) (*NamespaceList, error) {
+func (UnimplementedConfigurationServiceServer) ListNamespaces(context.Context, *ListNamespacesRequest) (*ListNamespacesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNamespaces not implemented")
 }
-func (UnimplementedConfigurationServiceServer) CreateNamespace(context.Context, *Namespace) (*UpdateNamespaceResponse, error) {
+func (UnimplementedConfigurationServiceServer) CreateNamespace(context.Context, *UpdateNamespaceRequest) (*NamespaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNamespace not implemented")
 }
-func (UnimplementedConfigurationServiceServer) UpdateNamespace(context.Context, *Namespace) (*UpdateNamespaceResponse, error) {
+func (UnimplementedConfigurationServiceServer) UpdateNamespace(context.Context, *UpdateNamespaceRequest) (*NamespaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNamespace not implemented")
 }
-func (UnimplementedConfigurationServiceServer) DeleteNamespace(context.Context, *NamespaceMeta) (*UpdateNamespaceResponse, error) {
+func (UnimplementedConfigurationServiceServer) DeleteNamespace(context.Context, *DeleteNamespaceRequest) (*DeleteNamespaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNamespace not implemented")
 }
-func (UnimplementedConfigurationServiceServer) GetResource(context.Context, *ResourceMeta) (*Resource, error) {
+func (UnimplementedConfigurationServiceServer) GetResource(context.Context, *GetResourceRequest) (*ResourceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetResource not implemented")
 }
-func (UnimplementedConfigurationServiceServer) ListResources(context.Context, *ListResourcesRequest) (*ResourceList, error) {
+func (UnimplementedConfigurationServiceServer) ListResources(context.Context, *ListResourcesRequest) (*ListResourcesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListResources not implemented")
 }
-func (UnimplementedConfigurationServiceServer) CreateResource(context.Context, *Resource) (*UpdateResourceResponse, error) {
+func (UnimplementedConfigurationServiceServer) CreateResource(context.Context, *UpdateResourceRequest) (*ResourceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateResource not implemented")
 }
-func (UnimplementedConfigurationServiceServer) UpdateResource(context.Context, *Resource) (*UpdateResourceResponse, error) {
+func (UnimplementedConfigurationServiceServer) UpdateResource(context.Context, *UpdateResourceRequest) (*ResourceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateResource not implemented")
 }
-func (UnimplementedConfigurationServiceServer) DeleteResource(context.Context, *ResourceMeta) (*UpdateResourceResponse, error) {
+func (UnimplementedConfigurationServiceServer) DeleteResource(context.Context, *DeleteResourceRequest) (*DeleteResourceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteResource not implemented")
 }
 func (UnimplementedConfigurationServiceServer) mustEmbedUnimplementedConfigurationServiceServer() {}
@@ -220,7 +220,7 @@ func RegisterConfigurationServiceServer(s grpc.ServiceRegistrar, srv Configurati
 }
 
 func _ConfigurationService_GetNamespace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NamespaceMeta)
+	in := new(GetNamespaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func _ConfigurationService_GetNamespace_Handler(srv interface{}, ctx context.Con
 		FullMethod: ConfigurationService_GetNamespace_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).GetNamespace(ctx, req.(*NamespaceMeta))
+		return srv.(ConfigurationServiceServer).GetNamespace(ctx, req.(*GetNamespaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -256,7 +256,7 @@ func _ConfigurationService_ListNamespaces_Handler(srv interface{}, ctx context.C
 }
 
 func _ConfigurationService_CreateNamespace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Namespace)
+	in := new(UpdateNamespaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -268,13 +268,13 @@ func _ConfigurationService_CreateNamespace_Handler(srv interface{}, ctx context.
 		FullMethod: ConfigurationService_CreateNamespace_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).CreateNamespace(ctx, req.(*Namespace))
+		return srv.(ConfigurationServiceServer).CreateNamespace(ctx, req.(*UpdateNamespaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ConfigurationService_UpdateNamespace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Namespace)
+	in := new(UpdateNamespaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -286,13 +286,13 @@ func _ConfigurationService_UpdateNamespace_Handler(srv interface{}, ctx context.
 		FullMethod: ConfigurationService_UpdateNamespace_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).UpdateNamespace(ctx, req.(*Namespace))
+		return srv.(ConfigurationServiceServer).UpdateNamespace(ctx, req.(*UpdateNamespaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ConfigurationService_DeleteNamespace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NamespaceMeta)
+	in := new(DeleteNamespaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -304,13 +304,13 @@ func _ConfigurationService_DeleteNamespace_Handler(srv interface{}, ctx context.
 		FullMethod: ConfigurationService_DeleteNamespace_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).DeleteNamespace(ctx, req.(*NamespaceMeta))
+		return srv.(ConfigurationServiceServer).DeleteNamespace(ctx, req.(*DeleteNamespaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ConfigurationService_GetResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ResourceMeta)
+	in := new(GetResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -322,7 +322,7 @@ func _ConfigurationService_GetResource_Handler(srv interface{}, ctx context.Cont
 		FullMethod: ConfigurationService_GetResource_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).GetResource(ctx, req.(*ResourceMeta))
+		return srv.(ConfigurationServiceServer).GetResource(ctx, req.(*GetResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -346,7 +346,7 @@ func _ConfigurationService_ListResources_Handler(srv interface{}, ctx context.Co
 }
 
 func _ConfigurationService_CreateResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Resource)
+	in := new(UpdateResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -358,13 +358,13 @@ func _ConfigurationService_CreateResource_Handler(srv interface{}, ctx context.C
 		FullMethod: ConfigurationService_CreateResource_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).CreateResource(ctx, req.(*Resource))
+		return srv.(ConfigurationServiceServer).CreateResource(ctx, req.(*UpdateResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ConfigurationService_UpdateResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Resource)
+	in := new(UpdateResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -376,13 +376,13 @@ func _ConfigurationService_UpdateResource_Handler(srv interface{}, ctx context.C
 		FullMethod: ConfigurationService_UpdateResource_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).UpdateResource(ctx, req.(*Resource))
+		return srv.(ConfigurationServiceServer).UpdateResource(ctx, req.(*UpdateResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ConfigurationService_DeleteResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ResourceMeta)
+	in := new(DeleteResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -394,7 +394,7 @@ func _ConfigurationService_DeleteResource_Handler(srv interface{}, ctx context.C
 		FullMethod: ConfigurationService_DeleteResource_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigurationServiceServer).DeleteResource(ctx, req.(*ResourceMeta))
+		return srv.(ConfigurationServiceServer).DeleteResource(ctx, req.(*DeleteResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

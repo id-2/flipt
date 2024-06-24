@@ -31,12 +31,8 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-var (
-	filter_ConfigurationService_GetNamespace_0 = &utilities.DoubleArray{Encoding: map[string]int{"key": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
-)
-
 func request_ConfigurationService_GetNamespace_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq NamespaceMeta
+	var protoReq GetNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -54,13 +50,6 @@ func request_ConfigurationService_GetNamespace_0(ctx context.Context, marshaler 
 	protoReq.Key, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "key", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_GetNamespace_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.GetNamespace(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -69,7 +58,7 @@ func request_ConfigurationService_GetNamespace_0(ctx context.Context, marshaler 
 }
 
 func local_request_ConfigurationService_GetNamespace_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq NamespaceMeta
+	var protoReq GetNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -89,32 +78,14 @@ func local_request_ConfigurationService_GetNamespace_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "key", err)
 	}
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_GetNamespace_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
 	msg, err := server.GetNamespace(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-var (
-	filter_ConfigurationService_ListNamespaces_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_ConfigurationService_ListNamespaces_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListNamespacesRequest
 	var metadata runtime.ServerMetadata
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_ListNamespaces_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
 
 	msg, err := client.ListNamespaces(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -125,20 +96,13 @@ func local_request_ConfigurationService_ListNamespaces_0(ctx context.Context, ma
 	var protoReq ListNamespacesRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_ListNamespaces_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
 	msg, err := server.ListNamespaces(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 func request_ConfigurationService_CreateNamespace_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Namespace
+	var protoReq UpdateNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -151,7 +115,7 @@ func request_ConfigurationService_CreateNamespace_0(ctx context.Context, marshal
 }
 
 func local_request_ConfigurationService_CreateNamespace_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Namespace
+	var protoReq UpdateNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -164,7 +128,7 @@ func local_request_ConfigurationService_CreateNamespace_0(ctx context.Context, m
 }
 
 func request_ConfigurationService_UpdateNamespace_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Namespace
+	var protoReq UpdateNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -177,7 +141,7 @@ func request_ConfigurationService_UpdateNamespace_0(ctx context.Context, marshal
 }
 
 func local_request_ConfigurationService_UpdateNamespace_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Namespace
+	var protoReq UpdateNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -194,7 +158,7 @@ var (
 )
 
 func request_ConfigurationService_DeleteNamespace_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq NamespaceMeta
+	var protoReq DeleteNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -227,7 +191,7 @@ func request_ConfigurationService_DeleteNamespace_0(ctx context.Context, marshal
 }
 
 func local_request_ConfigurationService_DeleteNamespace_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq NamespaceMeta
+	var protoReq DeleteNamespaceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -259,12 +223,8 @@ func local_request_ConfigurationService_DeleteNamespace_0(ctx context.Context, m
 
 }
 
-var (
-	filter_ConfigurationService_GetResource_0 = &utilities.DoubleArray{Encoding: map[string]int{"type": 0, "namespace": 1, "key": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
-)
-
 func request_ConfigurationService_GetResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ResourceMeta
+	var protoReq GetResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -302,13 +262,6 @@ func request_ConfigurationService_GetResource_0(ctx context.Context, marshaler r
 	protoReq.Key, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "key", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_GetResource_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.GetResource(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -317,7 +270,7 @@ func request_ConfigurationService_GetResource_0(ctx context.Context, marshaler r
 }
 
 func local_request_ConfigurationService_GetResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ResourceMeta
+	var protoReq GetResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -357,21 +310,10 @@ func local_request_ConfigurationService_GetResource_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "key", err)
 	}
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_GetResource_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
 	msg, err := server.GetResource(ctx, &protoReq)
 	return msg, metadata, err
 
 }
-
-var (
-	filter_ConfigurationService_ListResources_0 = &utilities.DoubleArray{Encoding: map[string]int{"type": 0, "namespace": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
-)
 
 func request_ConfigurationService_ListResources_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListResourcesRequest
@@ -402,13 +344,6 @@ func request_ConfigurationService_ListResources_0(ctx context.Context, marshaler
 	protoReq.Namespace, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
-	}
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_ListResources_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListResources(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -447,20 +382,13 @@ func local_request_ConfigurationService_ListResources_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
 	}
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigurationService_ListResources_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
 	msg, err := server.ListResources(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 func request_ConfigurationService_CreateResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Resource
+	var protoReq UpdateResourceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -500,7 +428,7 @@ func request_ConfigurationService_CreateResource_0(ctx context.Context, marshale
 }
 
 func local_request_ConfigurationService_CreateResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Resource
+	var protoReq UpdateResourceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -540,7 +468,7 @@ func local_request_ConfigurationService_CreateResource_0(ctx context.Context, ma
 }
 
 func request_ConfigurationService_UpdateResource_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Resource
+	var protoReq UpdateResourceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -580,7 +508,7 @@ func request_ConfigurationService_UpdateResource_0(ctx context.Context, marshale
 }
 
 func local_request_ConfigurationService_UpdateResource_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Resource
+	var protoReq UpdateResourceRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -624,7 +552,7 @@ var (
 )
 
 func request_ConfigurationService_UpdateResource_1(ctx context.Context, marshaler runtime.Marshaler, client ConfigurationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Resource
+	var protoReq UpdateResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -677,7 +605,7 @@ func request_ConfigurationService_UpdateResource_1(ctx context.Context, marshale
 }
 
 func local_request_ConfigurationService_UpdateResource_1(ctx context.Context, marshaler runtime.Marshaler, server ConfigurationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Resource
+	var protoReq UpdateResourceRequest
 	var metadata runtime.ServerMetadata
 
 	var (
