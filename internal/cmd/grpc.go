@@ -342,15 +342,15 @@ func NewGRPCServer(
 
 	if cfg.General.Enabled {
 		var configSource configserver.Source
-		switch cfg.General.Source.Type {
-		case config.LocalGeneralConfigSourceType:
+		switch cfg.Storage.Type {
+		case config.LocalStorageType:
 			// configuration servers
-			configSource = local.NewSource(osfs.New(cfg.General.Source.Local.Path), map[string]configstorage.ResourceTypeStorage{
+			configSource = local.NewSource(osfs.New(cfg.Storage.Local.Path), map[string]configstorage.ResourceTypeStorage{
 				"flipt.core.Flag":    &storagetypesflipt.FlagStorage{},
 				"flipt.core.Segment": &storagetypesflipt.SegmentStorage{},
 			})
 		default:
-			return nil, fmt.Errorf("unexpected general config source type: %q", cfg.General.Source.Type)
+			return nil, fmt.Errorf("general configuration api storage type not supported: %q", cfg.Storage.Type)
 		}
 
 		register.Add(configserver.NewServer(configSource))
