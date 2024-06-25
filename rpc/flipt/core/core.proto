@@ -1,8 +1,10 @@
 syntax = "proto3";
 
-package flipt.config;
+package flipt.core;
 
-option go_package = "go.flipt.io/flipt/rpc/flipt/config";
+import "google/protobuf/struct.proto";
+
+option go_package = "go.flipt.io/flipt/rpc/flipt/core";
 
 /* Flag */
 
@@ -25,7 +27,7 @@ message Variant {
   string key = 1;
   string name = 2;
   string description = 3;
-  string attachment = 4;
+  google.protobuf.Struct attachment = 4;
 }
 
 enum SegmentOperator {
@@ -52,8 +54,7 @@ enum RolloutType {
 
 message Rollout {
   RolloutType type = 1;
-  int32 rank = 2;
-  string description = 3;
+  string description = 2;
   oneof rule {
     RolloutSegment segment = 20;
     RolloutThreshold threshold = 21;
