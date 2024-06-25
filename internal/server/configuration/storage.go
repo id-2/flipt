@@ -4,49 +4,37 @@ import (
 	"context"
 	"errors"
 
-	"go.flipt.io/flipt/rpc/configuration"
+	rpcconfig "go.flipt.io/flipt/rpc/configuration"
 )
 
 var (
 	ErrNotFound      = errors.New("not found")
 	ErrAlreadyExists = errors.New("already exists")
+	ErrConflict      = errors.New("conflict")
 )
 
-type SourceOptions struct {
-	Reference *string
-}
+type ViewFunc func(context.Context, ResourceStoreView) error
 
-type SourceOption func(*SourceOptions)
-
-func WithReference(ref *string) SourceOption {
-	return func(so *SourceOptions) {
-		so.Reference = ref
-	}
-}
-
-type ViewFunc func(context.Context, StoreView) error
-
-type UpdateFunc func(context.Context, Store) error
+type UpdateFunc func(context.Context, ResourceStore) error
 
 type Source interface {
-	View(_ context.Context, fn ViewFunc, _ ...SourceOption) error
-	Update(_ context.Context, fn UpdateFunc, _ ...SourceOption) error
+	GetNamespace(_ context.Context, key string) (*rpcconfig.NamespaceResponse, error)
+	ListNamespaces(context.Context) (*rpcconfig.ListNamespacesResponse, error)
+	PutNamespace(_ context.Context, rev string, _ *rpcconfig.Namespace) (string, error)
+	DeleteNamespace(_ context.Context, rev, key string) (string, error)
+
+	View(_ context.Context, typ string, fn ViewFunc) error
+	Update(_ context.Context, rev, typ string, fn UpdateFunc) error
 }
 
-type StoreView interface {
-	GetNamespace(_ context.Context, key string) (*configuration.Namespace, error)
-	ListNamespaces(context.Context) (*configuration.NamespaceList, error)
-
-	GetResource(_ context.Context, typ, namespace, key string) (*configuration.Resource, error)
-	ListResources(_ context.Context, typ, namespace string) ([]*configuration.Resource, error)
+type ResourceStoreView interface {
+	GetResource(_ context.Context, namespace, key string) (*rpcconfig.ResourceResponse, error)
+	ListResources(_ context.Context, namespace string) (*rpcconfig.ListResourcesResponse, error)
 }
 
-type Store interface {
-	StoreView
+type ResourceStore interface {
+	ResourceStoreView
 
-	PutNamespace(context.Context, *configuration.Namespace) error
-	DeleteNamespace(_ context.Context, key string) error
-
-	PutResource(context.Context, *configuration.Resource) error
-	DeleteResource(_ context.Context, typ, namespace, key string) error
+	PutResource(context.Context, *rpcconfig.Resource) (string, error)
+	DeleteResource(_ context.Context, namespace, key string) (string, error)
 }
