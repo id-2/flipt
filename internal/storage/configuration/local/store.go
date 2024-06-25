@@ -27,13 +27,17 @@ func (s *Source) GetNamespace(_ context.Context, key string) (*rpcconfig.Namespa
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
-	_, err := s.src.Stat(key)
+	info, err := s.src.Stat(key)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			return nil, serverconfig.ErrNotFound
 		}
 
 		return nil, err
+	}
+
+	if !info.IsDir() {
+		return nil, serverconfig.ErrNotFound
 	}
 
 	return &rpcconfig.NamespaceResponse{
@@ -175,6 +179,10 @@ func (s *store) ListResources(ctx context.Context, namespace string) (*rpcconfig
 }
 
 func (s *store) PutResource(ctx context.Context, r *rpcconfig.Resource) (string, error) {
+	if r.Payload.TypeUrl == "" {
+		r.Payload.TypeUrl = r.Type
+	}
+
 	return "", s.rstore.PutResource(ctx, s.src, r)
 }
 

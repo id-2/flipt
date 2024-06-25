@@ -74,6 +74,7 @@ type Config struct {
 	Metrics        MetricsConfig        `json:"metrics,omitempty" mapstructure:"metrics" yaml:"metrics,omitempty"`
 	Tracing        TracingConfig        `json:"tracing,omitempty" mapstructure:"tracing" yaml:"tracing,omitempty"`
 	UI             UIConfig             `json:"ui,omitempty" mapstructure:"ui" yaml:"ui,omitempty"`
+	General        GeneralConfig        `json:"general,omitempty" mapstructure:"general" yaml:"general,omitempty"`
 }
 
 type Result struct {

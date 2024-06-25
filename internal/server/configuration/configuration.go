@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"go.flipt.io/flipt/rpc/configuration"
+	"google.golang.org/grpc"
 )
 
 var _ configuration.ConfigurationServiceServer = (*Server)(nil)
@@ -18,6 +19,11 @@ type Server struct {
 
 func NewServer(source Source) *Server {
 	return &Server{source: source}
+}
+
+// RegisterGRPC registers the *Server onto the provided grpc Server.
+func (s *Server) RegisterGRPC(server *grpc.Server) {
+	configuration.RegisterConfigurationServiceServer(server, s)
 }
 
 func (s *Server) GetNamespace(ctx context.Context, req *configuration.GetNamespaceRequest) (ns *configuration.NamespaceResponse, err error) {
@@ -58,7 +64,7 @@ func (s *Server) CreateNamespace(ctx context.Context, ns *configuration.UpdateNa
 func (s *Server) UpdateNamespace(ctx context.Context, ns *configuration.UpdateNamespaceRequest) (*configuration.NamespaceResponse, error) {
 	_, err := s.source.GetNamespace(ctx, ns.Key)
 	if err != nil {
-		return nil, fmt.Errorf("update namespace %q: %w", ns.Key, ErrAlreadyExists)
+		return nil, fmt.Errorf("update namespace %q: %w", ns.Key, err)
 	}
 
 	resp := &configuration.NamespaceResponse{

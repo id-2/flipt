@@ -7,12 +7,14 @@ import (
 	"io"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/go-git/go-billy/v5"
 	"go.flipt.io/flipt/internal/ext"
 	"go.flipt.io/flipt/internal/server/configuration"
 	rpcconfig "go.flipt.io/flipt/rpc/configuration"
 	"go.flipt.io/flipt/rpc/flipt/core"
+	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/structpb"
 	"gopkg.in/yaml.v3"
@@ -243,7 +245,17 @@ func payloadFromFlag(flag *ext.Flag) (*anypb.Any, error) {
 
 		dst.Rollouts = append(dst.Rollouts, r)
 	}
-	return anypb.New(dst)
+	return newAny(dst)
+}
+
+func newAny(msg proto.Message) (*anypb.Any, error) {
+	a, err := anypb.New(msg)
+	if err != nil {
+		return nil, err
+	}
+
+	a.TypeUrl = strings.TrimPrefix(a.TypeUrl, "type.googleapis.com/")
+	return a, nil
 }
 
 func resourceToFlag(r *rpcconfig.Resource) (*ext.Flag, error) {

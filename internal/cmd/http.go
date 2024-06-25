@@ -21,6 +21,7 @@ import (
 	"go.flipt.io/flipt/internal/gateway"
 	"go.flipt.io/flipt/internal/info"
 	"go.flipt.io/flipt/internal/server/authn/method"
+	"go.flipt.io/flipt/rpc/configuration"
 	"go.flipt.io/flipt/rpc/flipt"
 	"go.flipt.io/flipt/rpc/flipt/analytics"
 	"go.flipt.io/flipt/rpc/flipt/evaluation"
@@ -63,6 +64,7 @@ func NewHTTPServer(
 		evaluateAPI     = gateway.NewGatewayServeMux(logger)
 		evaluateDataAPI = gateway.NewGatewayServeMux(logger)
 		analyticsAPI    = gateway.NewGatewayServeMux(logger)
+		configAPI       = gateway.NewGatewayServeMux(logger)
 		httpPort        = cfg.Server.HTTPPort
 	)
 
@@ -84,6 +86,12 @@ func NewHTTPServer(
 
 	if err := analytics.RegisterAnalyticsServiceHandler(ctx, analyticsAPI, conn); err != nil {
 		return nil, fmt.Errorf("registering grpc gateway: %w", err)
+	}
+
+	if cfg.General.Enabled {
+		if err := configuration.RegisterConfigurationServiceHandler(ctx, configAPI, conn); err != nil {
+			return nil, fmt.Errorf("registering grpc gateway: %w", err)
+		}
 	}
 
 	if cfg.Cors.Enabled {
@@ -154,6 +162,9 @@ func NewHTTPServer(
 		r.Mount("/evaluate/v1", evaluateAPI)
 		r.Mount("/internal/v1/analytics", analyticsAPI)
 		r.Mount("/internal/v1", evaluateDataAPI)
+		if cfg.General.Enabled {
+			r.Mount("/config/v1", configAPI)
+		}
 
 		// mount all authentication related HTTP components
 		// to the chi router.

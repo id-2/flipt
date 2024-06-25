@@ -14,6 +14,7 @@ import (
 	"go.opentelemetry.io/contrib/propagators/autoprop"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/go-git/go-billy/v5/osfs"
 	"go.flipt.io/flipt/internal/cache"
 	"go.flipt.io/flipt/internal/cache/memory"
 	"go.flipt.io/flipt/internal/cache/redis"
@@ -34,12 +35,16 @@ import (
 	authzbundle "go.flipt.io/flipt/internal/server/authz/engine/bundle"
 	authzrego "go.flipt.io/flipt/internal/server/authz/engine/rego"
 	authzmiddlewaregrpc "go.flipt.io/flipt/internal/server/authz/middleware/grpc"
+	configserver "go.flipt.io/flipt/internal/server/configuration"
 	"go.flipt.io/flipt/internal/server/evaluation"
 	evaluationdata "go.flipt.io/flipt/internal/server/evaluation/data"
 	"go.flipt.io/flipt/internal/server/metadata"
 	middlewaregrpc "go.flipt.io/flipt/internal/server/middleware/grpc"
 	"go.flipt.io/flipt/internal/storage"
 	storagecache "go.flipt.io/flipt/internal/storage/cache"
+	configstorage "go.flipt.io/flipt/internal/storage/configuration"
+	"go.flipt.io/flipt/internal/storage/configuration/local"
+	storagetypesflipt "go.flipt.io/flipt/internal/storage/configuration/types/flipt"
 	fsstore "go.flipt.io/flipt/internal/storage/fs/store"
 	fliptsql "go.flipt.io/flipt/internal/storage/sql"
 	"go.flipt.io/flipt/internal/storage/sql/mysql"
@@ -334,6 +339,22 @@ func NewGRPCServer(
 	register.Add(metasrv)
 	register.Add(evalsrv)
 	register.Add(evaldatasrv)
+
+	if cfg.General.Enabled {
+		var configSource configserver.Source
+		switch cfg.General.Source.Type {
+		case config.LocalGeneralConfigSourceType:
+			// configuration servers
+			configSource = local.NewSource(osfs.New(cfg.General.Source.Local.Path), map[string]configstorage.ResourceTypeStorage{
+				"flipt.core.Flag":    &storagetypesflipt.FlagStorage{},
+				"flipt.core.Segment": &storagetypesflipt.SegmentStorage{},
+			})
+		default:
+			return nil, fmt.Errorf("unexpected general config source type: %q", cfg.General.Source.Type)
+		}
+
+		register.Add(configserver.NewServer(configSource))
+	}
 
 	// forward internal gRPC logging to zap
 	grpcLogLevel, err := zapcore.ParseLevel(cfg.Log.GRPCLevel)

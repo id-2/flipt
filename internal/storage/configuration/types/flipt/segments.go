@@ -187,7 +187,7 @@ func payloadFromSegment(segment *ext.Segment) (*anypb.Any, error) {
 		})
 	}
 
-	return anypb.New(dst)
+	return newAny(dst)
 }
 
 func resourceToSegment(r *rpcconfig.Resource) (*ext.Segment, error) {

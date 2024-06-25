@@ -1,8 +1,8 @@
 module go.flipt.io/flipt
 
-go 1.22.0
+go 1.22.3
 
-toolchain go1.22.2
+toolchain go1.22.4
 
 require (
 	cloud.google.com/go/storage v1.41.0
